@@ -3,16 +3,20 @@ import Home from "./pages/home/Home.jsx";
 import { useState, useContext } from 'react';
 import {  BrowserRouter,Route, Routes, Navigate } from "react-router-dom";
 import { AuthContext } from "./context/AuthContext.jsx"
+import New from "./pages/new_user/New.jsx";
+import { userInputs } from "./formSource.jsx";
+import Investigaciones from "./pages/investigaciones/investigaciones.jsx";
 
 
 
 function App() {
-  const [count, setCount] = useState(0)
+ 
 
   const { currentUser } = useContext(AuthContext)
 
 
   const RequireAuth = ({ children}) => {
+    //Si no hay usuario vuelve al inicio
     return currentUser ? children: <Navigate to="/" />;
   }
 
@@ -20,12 +24,16 @@ function App() {
     <div className="App">
       <BrowserRouter>
        <Routes>
-         <Route path="/" element= {<Login/>} />
-          <Route path = "/home" element= {
+          <Route path="/" element = { <Home /> } />
+
+
+          <Route path="/new" element= {<New inputs = { userInputs } />} />
+          <Route path = "/investigaciones" element= {
               <RequireAuth>
-                 <Home />  
+                 <Investigaciones />  
               </RequireAuth> 
             } />
+          <Route path = "/login" element= { <Login /> } />
        </Routes>
       </BrowserRouter>
       
@@ -34,4 +42,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
